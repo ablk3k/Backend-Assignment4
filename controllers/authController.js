@@ -9,7 +9,6 @@ const JWT_EXPIRES = process.env.JWT_EXPIRES || "7d";
 // ================= REGISTER =================
 exports.register = async (req, res, next) => {
   try {
-    // ✅ enforce express-validator rules
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
@@ -22,7 +21,6 @@ exports.register = async (req, res, next) => {
       return res.status(400).json({ error: "Email already registered" });
     }
 
-    // ✅ never accept role from client
     const u = new User({
       email,
       password,
@@ -50,7 +48,6 @@ exports.register = async (req, res, next) => {
 // ================= LOGIN =================
 exports.login = async (req, res, next) => {
   try {
-    // ✅ enforce express-validator rules
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
@@ -58,8 +55,6 @@ exports.login = async (req, res, next) => {
 
     const { email, password } = req.body;
 
-    // If in User model you set: password: { select: false }
-    // then this is REQUIRED:
     const u = await User.findOne({ email }).select("+password");
 
     if (!u) {
@@ -85,3 +80,4 @@ exports.login = async (req, res, next) => {
     next(err);
   }
 };
+
