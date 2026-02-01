@@ -11,7 +11,6 @@ const ReservationSchema = new mongoose.Schema(
 
     guests: { type: Number, required: true, min: 1 },
 
-    // ✅ relation to MenuItem (secondary references primary)
     selectedItems: [
       {
         type: mongoose.Schema.Types.ObjectId,
@@ -23,3 +22,4 @@ const ReservationSchema = new mongoose.Schema(
 );
 
 module.exports = mongoose.model("Reservation", ReservationSchema);
+
